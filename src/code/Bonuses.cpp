@@ -134,7 +134,7 @@ void incrLenght::hideBonus()
 incrSpeed::incrSpeed(std::shared_ptr<sf::Texture> texture, sf::Vector2f spawnPos, float _duraction)
 	: Bonuses{ texture, spawnPos, _duraction }
 {
-
+	//TODO : fix bug with slowmo ball movement after this buff
 	type = bufType::INCSPEED;
 
 	wasPickedUp = false;

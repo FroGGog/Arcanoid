@@ -50,6 +50,12 @@ sf::FloatRect Player::getGBounds() const
 	return player_shape.getGlobalBounds();
 }
 
+void Player::restartPos()
+{
+	player_shape.setPosition(sf::Vector2f{ 400, 500 });
+	player_shape.setSize(sf::Vector2f{ 75, 10 });
+}
+
 void Player::resize(sf::Vector2f newSize)
 {
 	player_shape.setSize(newSize);

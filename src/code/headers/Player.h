@@ -20,6 +20,8 @@ public:
 	sf::Vector2f getCenter() const;
 	sf::FloatRect getGBounds() const;
 
+	void restartPos();
+
 	void resize(sf::Vector2f newSize);
 
 	void update(sf::Time deltaTime);

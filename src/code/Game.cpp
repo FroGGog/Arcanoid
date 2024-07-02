@@ -2,8 +2,8 @@
 
 #include "headers/Game.h"
 
-// TODO : simple GUI, main menu, score save etc
-// TODO : maybe add new buffs 
+// TODO : sstarting pos (when ball is connected to player, player shoot ball with "space"
+// TODO : restart game when lives below 0
 
 void Game::initVars()
 {
@@ -12,12 +12,15 @@ void Game::initVars()
 	vidMode.height = 600;
 
 	isOpen = true;
-
+ 
 	playerObj = std::make_unique<Player>();
 
 	ballObj = std::make_shared<Ball>(sf::Vector2f{450, 400});
 	allBalls.push_back(ballObj);
 	
+	score = 0;
+	lives = 3;
+
 }
 
 void Game::initWindow()
@@ -112,6 +115,36 @@ void Game::initTextures()
 
 }
 
+void Game::initFonts()
+{
+	if (!mainFont.loadFromFile("src/assets/fonts/First.otf")) {
+		std::cerr << "ERROR::LOADFROMFILE::fonts\n";
+	}
+
+	upScore.setFont(mainFont);
+	upScore.setCharacterSize(24);
+	upScore.setPosition(sf::Vector2f{ 850, 40 });
+	upScore.setString("Score: ");
+
+	scoreText.setFont(mainFont);
+	scoreText.setCharacterSize(24);
+	scoreText.setPosition(sf::Vector2f{ 800, 80 });
+	
+	livesText.setFont(mainFont);
+	livesText.setCharacterSize(24);
+	livesText.setPosition(sf::Vector2f{ 800, 150 });
+
+
+	std::stringstream ss;
+	ss << std::to_string(lives);
+	livesText.setString(ss.str());
+
+	std::stringstream ss2;
+	ss2 << std::to_string(score);
+	scoreText.setString(ss2.str());
+
+}
+
 void Game::updateEvents()
 {
 	while (window->pollEvent(winEvents)) {
@@ -136,6 +169,7 @@ void Game::updateBallCollision()
 	for (auto& ball : allBalls) {
 		for (int i{ 0 }; i < allTargets.size(); i++) {
 			if (ball->getGBounds().intersects(allTargets[i]->getGBounds())) {
+
 				if (ball->getGBounds().getPosition().x > allTargets[i]->getCenter().x) {
 					ball->updateDir(allTargets[i]->getCenter(), true);
 				}
@@ -146,7 +180,7 @@ void Game::updateBallCollision()
 
 				//target got hit and check if it is on 0 hp
 				if (allTargets[i]->gotHit()) {
-					
+					score += 250;
 					//if target got buff, create it when target destroy
 					if (allTargets[i]->getBufType() == bufType::ADDBALL) {
 						auto tempBonus = std::make_shared<addBallBonus>(allTextures["multiplyBall"],
@@ -170,7 +204,11 @@ void Game::updateBallCollision()
 					allTargets.erase(allTargets.begin() + i);
 					
 				}
-				allTargets[i]->updateColor();
+				else {
+					allTargets[i]->updateColor();
+					score += 100;
+				}
+				
 			}
 		}
 	}
@@ -245,6 +283,36 @@ void Game::updateBallVector()
 	}
 }
 
+void Game::updateTexts()
+{
+	std::stringstream ss;
+	ss << std::to_string(lives);
+	livesText.setString(ss.str());
+
+	std::stringstream ss2;
+	ss2 << std::to_string(score);
+	scoreText.setString(ss2.str());
+
+}
+
+void Game::updateLives()
+{
+	if (allBalls.size() == 0) {
+		restartRound();
+		lives--;
+	}
+
+}
+
+void Game::restartRound()
+{
+	ballObj = nullptr;
+	ballObj = std::make_shared<Ball>(sf::Vector2f{ 450, 400 });
+	playerObj->restartPos();
+	allBalls.push_back(ballObj);
+
+}
+
 void Game::addBalls()
 {
 	// we need to add x2 balls
@@ -293,6 +361,8 @@ Game::Game()
 
 	initGameField();
 
+	initFonts();
+
 }
 
 bool Game::winOpen() const
@@ -319,12 +389,18 @@ void Game::render()
 		bonus->render(*window);
 	}
 
+	window->draw(scoreText);
+	window->draw(livesText);
+	window->draw(upScore);
+
 	window->display();
 
 }
 
 void Game::update(sf::Time deltaTime)
 {
+	updateLives();
+
 	updateEvents();
 
 	playerObj->update(deltaTime);
@@ -340,5 +416,7 @@ void Game::update(sf::Time deltaTime)
 	isAllBonusesOnScreen();
 
 	updateBallCollision();
+
+	updateTexts();
 
 }

@@ -81,4 +81,7 @@
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="src\assets\fonts\Silkscreen.ttf" />
+  </ItemGroup>
 </Project>

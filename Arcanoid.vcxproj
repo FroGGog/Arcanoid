@@ -181,6 +181,9 @@
     <Image Include="src\assets\bufficons\multiplyBall.png" />
     <Image Include="src\assets\bufficons\speedUp.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="src\assets\fonts\Silkscreen.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

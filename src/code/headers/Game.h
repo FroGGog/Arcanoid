@@ -28,6 +28,17 @@ private:
 	//gui and textures
 	std::map<std::string, std::shared_ptr<sf::Texture>> allTextures;
 
+	//text
+	sf::Font mainFont;
+	sf::Text scoreText;
+	sf::Text livesText;
+	sf::Text upScore;
+
+	//gameLogicVars
+	short lives;
+	int score;
+
+
 	//check if window is open
 	bool isOpen;
 
@@ -35,11 +46,17 @@ private:
 	void initWindow();
 	void initGameField();
 	void initTextures();
+	void initFonts();
 
 	void updateEvents();
 	void updateBallCollision();
 	void isAllBonusesOnScreen();
 	void updateBallVector();
+	void updateTexts();
+	void updateLives();
+
+	//restart round and all game
+	void restartRound();
 
 	//apply bonuses
 	void addBalls();
