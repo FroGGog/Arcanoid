@@ -34,6 +34,7 @@ private:
 	sf::Text livesText;
 	sf::Text upScore;
 	sf::Text upLivesText;
+	sf::Text endGame;
 
 	std::vector<sf::Text> allText;
 
@@ -41,6 +42,7 @@ private:
 	short lives;
 	int score;
 	bool startRound;
+	bool gameLoose;
 
 	//check if window is open
 	bool isOpen;
@@ -71,6 +73,9 @@ public:
 	Game();
 
 	bool winOpen() const;
+	bool gameLost() const;
+
+	void restartGame();
 
 	void render();
 

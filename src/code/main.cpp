@@ -15,16 +15,26 @@ int main()
 
     while (game.winOpen()) {
 
-        timeSinceLstUpd += frameClock.restart();
+        //if window is open and game is not lost
+        if (!game.gameLost()) {
+            timeSinceLstUpd += frameClock.restart();
 
-        while (timeSinceLstUpd > TimePerFrame) {
-            timeSinceLstUpd -= TimePerFrame;
+            while (timeSinceLstUpd > TimePerFrame) {
+                timeSinceLstUpd -= TimePerFrame;
 
-            game.update(TimePerFrame);
+                game.update(TimePerFrame);
 
+            }
+
+            game.render();
+        }
+        //if game is lost ask player to player again and froze all other stuff
+        else {
+            game.restartGame();
+            game.render();
         }
 
-        game.render();
+        
 
     }
 

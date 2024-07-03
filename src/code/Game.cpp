@@ -20,6 +20,7 @@ void Game::initVars()
 	score = 0;
 	lives = 3;
 	startRound = true;
+	gameLoose = false;
 
 }
 
@@ -33,6 +34,9 @@ void Game::initWindow()
 
 void Game::initGameField()
 {
+	//for game restarts
+	allTargets.clear();
+
 	int c_add = 7, c_lenght = 7, c_speed = 7;
 	//59.f, 29.5f
 	float startX = 20;
@@ -121,6 +125,7 @@ void Game::initFonts()
 		std::cerr << "ERROR::LOADFROMFILE::fonts\n";
 	}
 
+	//static text
 	upScore.setFont(mainFont);
 	upScore.setCharacterSize(24);
 	upScore.setPosition(sf::Vector2f{ 850, 40 });
@@ -133,6 +138,13 @@ void Game::initFonts()
 	upLivesText.setString("Lives: ");
 	allText.push_back(upLivesText);
 
+	endGame.setFont(mainFont);
+	endGame.setCharacterSize(30);
+	endGame.setPosition(sf::Vector2f{ 100, 350 });
+	endGame.setString("YOU LOST! PRESS \"r\" to restart game! ");
+
+	
+	//dynamic text
 	scoreText.setFont(mainFont);
 	scoreText.setCharacterSize(24);
 	scoreText.setPosition(sf::Vector2f{ 820, 80 });
@@ -319,7 +331,24 @@ void Game::restartRound()
 	ballObj = std::make_shared<Ball>(sf::Vector2f{ playerObj->getCenter().x - 5.f,
 		playerObj->getCenter().y - 20.f});
 	allBalls.push_back(ballObj);
+	allBonuses.clear();
 	startRound = true;
+
+}
+
+void Game::restartGame(){
+
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+		allBalls.clear();
+		allBonuses.clear();
+		playerObj = nullptr;
+		score = 0;
+		lives = 3;
+		initVars();
+		initGameField();
+	}
+
 
 }
 
@@ -380,10 +409,19 @@ bool Game::winOpen() const
 	return isOpen;
 }
 
+bool Game::gameLost() const
+{
+	return gameLoose;
+}
+
 
 void Game::render()
 {
 	window->clear();
+
+	if (gameLoose) {
+		window->draw(endGame);
+	}
 
 	playerObj->render(*window);
 
@@ -412,6 +450,7 @@ void Game::render()
 
 void Game::update(sf::Time deltaTime)
 {
+
 	updateLives();
 
 	updateEvents();
@@ -430,9 +469,7 @@ void Game::update(sf::Time deltaTime)
 		}
 		updateBallVector();
 	}
-	
-	
-
+ 
 	for (auto& bonus : allBonuses) {
 		bonus->update(deltaTime);
 	}
@@ -440,6 +477,12 @@ void Game::update(sf::Time deltaTime)
 
 	updateBallCollision();
 
+	if (lives < 1) {
+		lives = 0;
+		gameLoose = true;
+	}
+
 	updateTexts();
+
 
 }
