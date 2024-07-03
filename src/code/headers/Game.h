@@ -16,7 +16,7 @@ private:
 	sf::Event winEvents;
 
 	//game stuff
-	std::unique_ptr<Player> playerObj;
+	std::shared_ptr<Player> playerObj;
 
 	std::vector<std::shared_ptr<Targets>> allTargets;
 
@@ -33,11 +33,14 @@ private:
 	sf::Text scoreText;
 	sf::Text livesText;
 	sf::Text upScore;
+	sf::Text upLivesText;
+
+	std::vector<sf::Text> allText;
 
 	//gameLogicVars
 	short lives;
 	int score;
-
+	bool startRound;
 
 	//check if window is open
 	bool isOpen;

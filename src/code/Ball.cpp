@@ -60,7 +60,13 @@ void Ball::checkBorderCollision()
 		int randNum = rand() % (150 - 130 + 1) + 130;
 		randNum = static_cast<float>(randNum);
 		dir.y = speed;
-		dir.x = randNum;
+		if (dir.x > 0) {
+			dir.x = randNum;
+		}
+		else {
+			dir.x = -randNum;
+		}
+		
 	}
 
 	if (ball_shape.getPosition().y > 600) {
@@ -124,4 +130,10 @@ void Ball::update(sf::Time deltaTime)
 	ball_shape.move(dir * deltaTime.asSeconds());
 
 	checkBorderCollision();
+}
+
+//update func round start
+void Ball::updateStart(std::shared_ptr<Player> pPtr)
+{
+	ball_shape.setPosition(sf::Vector2f{ pPtr->getCenter().x - 5.f, pPtr->getCenter().y - 20.f });
 }

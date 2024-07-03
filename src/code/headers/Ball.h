@@ -1,4 +1,5 @@
 #pragma once
+#include "Player.h"
 
 class Ball {
 
@@ -25,6 +26,7 @@ public:
 	void render(sf::RenderTarget& target);
 
 	void update(sf::Time deltaTime);
+	void updateStart(std::shared_ptr<Player> playerPtr);
 	void updateDir(sf::Vector2f distance, bool right, bool player = false);
 
 };

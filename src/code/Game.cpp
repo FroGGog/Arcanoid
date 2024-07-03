@@ -2,7 +2,6 @@
 
 #include "headers/Game.h"
 
-// TODO : sstarting pos (when ball is connected to player, player shoot ball with "space"
 // TODO : restart game when lives below 0
 
 void Game::initVars()
@@ -13,13 +12,14 @@ void Game::initVars()
 
 	isOpen = true;
  
-	playerObj = std::make_unique<Player>();
+	playerObj = std::make_shared<Player>();
 
 	ballObj = std::make_shared<Ball>(sf::Vector2f{450, 400});
 	allBalls.push_back(ballObj);
 	
 	score = 0;
 	lives = 3;
+	startRound = true;
 
 }
 
@@ -125,15 +125,22 @@ void Game::initFonts()
 	upScore.setCharacterSize(24);
 	upScore.setPosition(sf::Vector2f{ 850, 40 });
 	upScore.setString("Score: ");
+	allText.push_back(upScore);
+
+	upLivesText.setFont(mainFont);
+	upLivesText.setCharacterSize(24);
+	upLivesText.setPosition(sf::Vector2f{ 850, 110 });
+	upLivesText.setString("Lives: ");
+	allText.push_back(upLivesText);
 
 	scoreText.setFont(mainFont);
 	scoreText.setCharacterSize(24);
-	scoreText.setPosition(sf::Vector2f{ 800, 80 });
+	scoreText.setPosition(sf::Vector2f{ 820, 80 });
 	
 	livesText.setFont(mainFont);
 	livesText.setCharacterSize(24);
-	livesText.setPosition(sf::Vector2f{ 800, 150 });
-
+	livesText.setPosition(sf::Vector2f{ 900, 150 });
+	
 
 	std::stringstream ss;
 	ss << std::to_string(lives);
@@ -142,6 +149,7 @@ void Game::initFonts()
 	std::stringstream ss2;
 	ss2 << std::to_string(score);
 	scoreText.setString(ss2.str());
+
 
 }
 
@@ -307,9 +315,11 @@ void Game::updateLives()
 void Game::restartRound()
 {
 	ballObj = nullptr;
-	ballObj = std::make_shared<Ball>(sf::Vector2f{ 450, 400 });
 	playerObj->restartPos();
+	ballObj = std::make_shared<Ball>(sf::Vector2f{ playerObj->getCenter().x - 5.f,
+		playerObj->getCenter().y - 20.f});
 	allBalls.push_back(ballObj);
+	startRound = true;
 
 }
 
@@ -391,7 +401,10 @@ void Game::render()
 
 	window->draw(scoreText);
 	window->draw(livesText);
-	window->draw(upScore);
+
+	for (auto& text : allText) {
+		window->draw(text);
+	}
 
 	window->display();
 
@@ -405,10 +418,20 @@ void Game::update(sf::Time deltaTime)
 
 	playerObj->update(deltaTime);
 
-	for (auto& ball : allBalls) {
-		ball->update(deltaTime);
+	if (startRound) {
+		allBalls[0]->updateStart(playerObj);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+			startRound = false;
+		}
 	}
-	updateBallVector();
+	else {
+		for (auto& ball : allBalls) {
+			ball->update(deltaTime);
+		}
+		updateBallVector();
+	}
+	
+	
 
 	for (auto& bonus : allBonuses) {
 		bonus->update(deltaTime);
