@@ -2,7 +2,10 @@
 
 #include "headers/Game.h"
 
-// TODO : restart game when lives below 0
+// TODO : Add end game mechanic
+// TODO : Add statictic recording
+// TODO : Add level creation mechanic
+// TODO : Add new bonuses
 
 void Game::initVars()
 {
@@ -338,7 +341,7 @@ void Game::restartRound()
 
 void Game::restartGame(){
 
-
+	//wait until player press restart button
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
 		allBalls.clear();
 		allBonuses.clear();
@@ -346,6 +349,7 @@ void Game::restartGame(){
 		score = 0;
 		lives = 3;
 		initVars();
+		//restart game field
 		initGameField();
 	}
 
