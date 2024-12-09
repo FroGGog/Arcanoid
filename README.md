@@ -8,11 +8,11 @@ A classic arcanoid game made in C++ using sfml library.
 Use **WASD** to control player's panel. Catch bonuses to beat level.
 
 Bonuses: 
-- ![Screenshot](Screenshots/increaseLenght.png?raw=true "Lenght increase bonus")
+- <img src="Screenshots/increaseLenght.png?raw=true" alt="Lenght increase bonus" width="32" height="32">
 Increases player's panel lenght
-- ![Screenshot](Screenshots/multiplyBall.png?raw=true "Balls multiply")
+- <img src="Screenshots/multiplyBall.png?raw=true" alt="Lenght increase bonus" width="32" height="32">
 Multiply count of all balls on screen by 2
-- ![Screenshot](Screenshots/speedUp.png?raw=true "Speed up")
+- <img src="Screenshots/speedUp.png?raw=true" alt="Lenght increase bonus" width="32" height="32">
 Speed up game x2 for few seconds
 
 ## Screenshots
