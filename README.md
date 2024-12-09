@@ -19,7 +19,7 @@ Speed up game x2 for few seconds
 ![Screenshot](Screenshots/09.12.2024.png?raw=true "Start of game")
 ![Screenshot](Screenshots/09.12.2024(2).png?raw=true "Gameplay")
 
-#### Must Have (dependencies)
+### Must Have (dependencies)
 - A valid C++ compiler - clang, gcc, msvc that supports c++17
 - cmake >= v3.15
 
