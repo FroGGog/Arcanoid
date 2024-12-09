@@ -1,5 +1,6 @@
 #pragma once
 
+
 // TODO : add other buff types
 enum class bufType{ADDBALL, INCLENGHT, INCSPEED, SLOWMOV, NONE};
 

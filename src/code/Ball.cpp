@@ -1,5 +1,3 @@
-#include "headers/stdafx.h"
-
 #include "headers/Ball.h"
 
 void Ball::updateDir(sf::Vector2f distance, bool right, bool player)

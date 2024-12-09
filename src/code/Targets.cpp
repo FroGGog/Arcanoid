@@ -1,5 +1,3 @@
-#include "headers/stdafx.h"
-
 #include "headers/Targets.h"
 
 Targets::Targets(sf::Vector2f pos, int _hp)

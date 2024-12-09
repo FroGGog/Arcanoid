@@ -1,5 +1,3 @@
-#include "headers/stdafx.h"
-
 #include "headers/Game.h"
 
 int main()
@@ -33,8 +31,6 @@ int main()
             game.restartGame();
             game.render();
         }
-
-        
 
     }
 

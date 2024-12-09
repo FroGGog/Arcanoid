@@ -1,6 +1,5 @@
 #pragma once
 
-#include "headers/Game.h"
 #include "headers/Player.h"
 #include "headers/Targets.h"
 #include "headers/Ball.h"

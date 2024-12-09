@@ -1,11 +1,5 @@
-#include "headers/stdafx.h"
-
 #include "headers/Game.h"
 
-// TODO : Add end game mechanic
-// TODO : Add statictic recording
-// TODO : Add level creation mechanic
-// TODO : Add new bonuses
 
 void Game::initVars()
 {
@@ -102,20 +96,20 @@ void Game::initGameField()
 void Game::initTextures()
 {
 	auto tempText = std::make_shared<sf::Texture>();
-	if (!tempText->loadFromFile("src/assets/bufficons/multiplyBall.png")) {
+	if (!tempText->loadFromFile("textures/multiplyBall.png")) {
 		std::cerr << "ERROR:LOADFROMFILE::multyplyBall.png\n";
 	}
 	allTextures["multiplyBall"] = tempText;
 
 	tempText = std::make_shared<sf::Texture>();
-	if (!tempText->loadFromFile("src/assets/bufficons/increaseLenght.png")) {
+	if (!tempText->loadFromFile("textures/increaseLenght.png")) {
 		std::cerr << "ERROR:LOADFROMFILE::increaseLenght.png\n";
 	}
 	allTextures["increaseLenght"] = tempText;
 
 
 	tempText = std::make_shared<sf::Texture>();
-	if (!tempText->loadFromFile("src/assets/bufficons/speedUp.png")) {
+	if (!tempText->loadFromFile("textures/speedUp.png")) {
 		std::cerr << "ERROR:LOADFROMFILE::speedUp.png\n";
 	}
 	allTextures["speedUp"] = tempText;
@@ -124,7 +118,7 @@ void Game::initTextures()
 
 void Game::initFonts()
 {
-	if (!mainFont.loadFromFile("src/assets/fonts/First.otf")) {
+	if (!mainFont.loadFromFile("First.otf")) {
 		std::cerr << "ERROR::LOADFROMFILE::fonts\n";
 	}
 

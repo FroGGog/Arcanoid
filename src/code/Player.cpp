@@ -1,4 +1,4 @@
-#include "headers/stdafx.h"
+
 #include "headers/Player.h"
 
 
