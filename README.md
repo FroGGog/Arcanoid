@@ -30,7 +30,7 @@ The CMAKE is set up to automatically download the dependencies and link against 
 ```
 git clone https://github.com/FroGGog/Arcanoid.git
 cd Arcanoid
-build .
+cmake build .
 ```
 
 Feel free to fork, fix the issues and contribute. Help is always welcome.
